@@ -13,3 +13,7 @@ doc/api/
 
 # IntelliJ IDEA
 .idea/
+
+vendor/
+.dart_tool/
+.vscode/

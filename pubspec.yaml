@@ -1,4 +1,4 @@
-name: lua
+name: luaT
 description: A library and cli for running, disassembling, and debugging Lua programs.
 version: 0.0.1
 homepage: https://github.com/P-T-/luadart
@@ -10,6 +10,9 @@ environment:
 dependencies:
   tuple: '^1.0.2'
   args: '^1.5.0'
+
+  lua:
+    path: vendor/lua
 
 dev_dependencies:
   test: '^1.3.0'
