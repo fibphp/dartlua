@@ -89,7 +89,7 @@ class LuaState {
   void loadTable() => lualib.loadTable(_context);
   
   Future<LuaFunction> loadFile(String path) async {
-    var res = await Process.run("luadist/bin/luac5.2", [path]);
+    var res = await Process.run("luadist/bin/luac52", [path]);
     
     if (res.stderr != "") throw res.stderr;
     
@@ -99,7 +99,8 @@ class LuaState {
     var fh = await f.open(mode: FileMode.read);
     var buffer = new Uint8List(await f.length());
     await fh.readInto(buffer);
-    
+    await fh.close();
+
     await f.delete();
 
     var decoder = new Decoder(buffer.buffer);
