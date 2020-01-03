@@ -49,7 +49,7 @@ main(List<String> rawArgs) async {
     var f = new File("luac.out");
     
     if (!await f.exists()) throw "luac.out not found";
-    var fh = await f.open(mode: FileMode.READ);
+    var fh = await f.open(mode: FileMode.read);
     var buffer = new Uint8List(await f.length());
     await fh.readInto(buffer);
     
