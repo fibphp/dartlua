@@ -140,9 +140,9 @@ class Context {
   
   static String numToString(num x) {
     if (x is int) return x.toString();
-    if (x == double.infinity) return "inf";
-    if (x != x) return "-nan";
-    if (x == double.negativeInfinity) return "-inf";
+    if (x == double.infinity) return "1.#INF";
+    if (x != x) return "-1.#IND";
+    if (x == double.negativeInfinity) return "-1.#INF";
     return x.toString().replaceFirst(new RegExp(r"\.0$"), "");
   }
   

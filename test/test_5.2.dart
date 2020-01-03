@@ -8,17 +8,20 @@ import 'generate_expect.dart' as foo;
 
 main() async {
   await foo.main(); // Temporary
-  
+
   Map<FileSystemEntity, String> tests = {};
-  
-  await for (var f in new Directory("testcase").list().where((e) => e.path.endsWith(".lua"))) {
+
+  await for (var f in new Directory("testcase")
+      .list()
+      .where((e) => e.path.endsWith(".lua"))) {
     tests[f] = await new File(f.path.replaceAll(".lua", ".txt")).readAsString();
   }
-  
+
   group("Lua 5.2", () {
     for (var f in tests.keys) {
       test(f.uri.pathSegments.last, () async {
         var out = new StringBuffer();
+        var correct = tests[f].replaceAll("\r\n", "\n");
 
         CoroutineResult res = await runZoned(() async {
           var state = new LuaState();
@@ -28,10 +31,12 @@ main() async {
             out.writeln(line);
           },
         ));
-        
-        expect(res.success, true, reason: maybeAt(res.values, 0));
-  
-        expect(out.toString(), tests[f]);
+
+        if (res.success) {
+          expect(out.toString(), correct, reason: "expect in test ${f}");
+        }
+
+        expect(res.success, true, reason: res.toString());
       });
     }
   });
